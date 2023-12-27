@@ -8,9 +8,15 @@ module.exports = {
             option
             .setName('target')
             .setDescription('send this person to tartarus!')
-            .setRequired(true)),
+            .setRequired(true))
+		.addRoleOption(option =>
+			option.setName('role')
+			.setDescription('testing')
+			.setRequired(true)),
 	async execute(interaction) {
-		const user = interaction.options.getUser('target');
-        
+		const role = interaction.options.getRole('role');
+		const member = interaction.options.getMember('target');
+		member.roles.add(role);
+		console.log(role);
 	},
 };
