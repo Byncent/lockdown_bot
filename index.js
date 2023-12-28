@@ -7,6 +7,8 @@ const { token } = require('./config.json');
 const client = new Client({ intents: 3276799  });
 
 client.commands = new Collection();
+client.userRoles = new Map();
+
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 

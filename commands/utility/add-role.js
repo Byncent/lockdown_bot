@@ -1,4 +1,5 @@
 const { SlashCommandBuilder} = require('discord.js');
+const helpers = require('../../helpers');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -20,7 +21,7 @@ module.exports = {
 			await interaction.reply({ content: `${member.nickname} already has role ${role.name} u silly!`, ephemeral: true });
 			return;
 		}
-		member.roles.add(role);
+		helpers.addRole(member, role);
 		await interaction.reply({ content: `Role ${role.name} has been added to user ${member.nickname}`, ephemeral: true });
 	},
 };
