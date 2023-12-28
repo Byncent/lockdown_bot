@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const helpers = require('../../helpers');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,17 +11,17 @@ module.exports = {
             .setRequired(true)),
 	async execute(interaction) {
 		const member = interaction.options.getMember('target');
-		let res =  `the following roles:`;
-		helpers.flushRolesToJson(interaction.client);
+		const roles = interaction.guild.roles.cache;
+
 		for(let [, role] of member.roles.cache){
 			if(role.name == '@everyone'){
 				continue;
 			}
-			res += '\n' + '- ' + role.name;
-			console.log(role);
 			member.roles.remove(role);
 		}
-		res += `\nhas been removed from user ${member.nickname}`;
-		await interaction.reply({ content: res, ephemeral: true });
+
+		console.log(member.roles);
+		member.roles.add([...roles.values()].find(role => role.name === 'tartarused'));
+		await interaction.reply({ content: `${member.nickname} has been sent to tartarus!`, ephemeral: true });
 	},
 };

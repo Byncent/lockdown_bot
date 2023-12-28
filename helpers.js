@@ -15,14 +15,21 @@ const addRole = (user, role)=>{
     const client = user.client;
     user.roles.add(role);
 
-    console.log(client.userRoles.get(user.id));
     client.userRoles.get(user.id).push(role.id);
-    console.log(client.userRoles.get(user.id));
     flushRolesToJson(client);
 }
 
 const removeRole = (user, role)=>{
+
+    const client = user.client;
     user.roles.remove(role);
+
+    for(let i in client.userRoles.get(user.id)){
+        client.userRoles.get(user.id).splice(i, 1);
+        break;
+    }
+    
+    flushRolesToJson(client);
 }
 
 const flushRolesToJson = (client)=>{
