@@ -1,7 +1,24 @@
 const fs = require('fs');
 
+const init = (client, guild) => {
+    for(let [memberId, member] of guild.members.cache){
+        let roles = [];
+        for(let [roleId,] of member.roles.cache){
+            roles.push(roleId);
+        }
+        client.userRoles.set(memberId, roles);
+    }
+    flushRolesToJson(client);
+}
+
 const addRole = (user, role)=>{
+    const client = user.client;
     user.roles.add(role);
+
+    console.log(client.userRoles.get(user.id));
+    client.userRoles.get(user.id).push(role.id);
+    console.log(client.userRoles.get(user.id));
+    flushRolesToJson(client);
 }
 
 const removeRole = (user, role)=>{
@@ -25,4 +42,4 @@ const flushRolesToJson = (client)=>{
     });
 }
 
-module.exports = {addRole, removeRole, flushRolesToJson};
+module.exports = {init, addRole, removeRole, flushRolesToJson};
