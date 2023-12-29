@@ -16,23 +16,12 @@ module.exports = {
 
 		await fs.access('roles.json', fs.constants.F_OK, (err) => {
 			if(err){
-				console.log("roles.json does not exist, initializing");
 				helpers.init(client, guild);
-				console.log("initialized")
 			}else{
-				console.log("roles.")
-				fs.readFile("roles.json", (error, data) => {
-					if (error) {
-						console.error(error);
-						throw error;
-					}
-		
-					const userRoles = JSON.parse(data);
-					for(let userRole of userRoles){
-						client.userRoles.set(userRole.id, userRole.memberRoles);
-					}
-					console.log(`roles loaded!`);
-				});
+				const userRoles = require('../roles.json');
+				for(let userRole of userRoles){
+					client.userRoles.set(userRole.id, userRole.memberRoles);
+				}
 			}
 		});
 	},

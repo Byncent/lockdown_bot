@@ -20,7 +20,6 @@ module.exports = {
 			member.roles.remove(role);
 		}
 
-		console.log(member.roles);
 		member.roles.add([...roles.values()].find(role => role.name === 'tartarused'));
 		await interaction.reply({ content: `${member.nickname} has been sent to tartarus!`, ephemeral: true });
 	},
